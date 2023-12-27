@@ -14,7 +14,7 @@ class SubtitlePlayer:
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         x_position = (screen_width - window_width) // 2
-        y_position = screen_height - window_height - 40 # Top of the screen
+        y_position = screen_height - window_height # Top of the screen
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # Configure window appearance
@@ -62,6 +62,10 @@ class SubtitlePlayer:
         self.load_button = tk.Button(root, text="Load Subtitle", command=self.load_subtitle, fg="white", bg="#040406")
         self.load_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
+        # Switch Position button
+        self.switch_position_button = tk.Button(root, text="Switch Position", command=self.switch_position, fg="white", bg="#040406")
+        self.switch_position_button.pack(side=tk.RIGHT, padx=10, pady=4)
+
         # Initialize subtitle-related variables
         self.subtitle_file = None
         self.subtitles = []
@@ -69,6 +73,7 @@ class SubtitlePlayer:
         self.after_id = None
         self.start_time = None
         self.pause_time = None
+        self.is_top_position = False
 
         # Handle window close event
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -235,6 +240,18 @@ class SubtitlePlayer:
             self.play_subtitle_segment_loop()
         else:
             self.next_button["state"] = "disabled"
+
+    def switch_position(self):
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+
+        if self.is_top_position:
+            y_position = screen_height - self.root.winfo_height()
+        else:
+            y_position = 0
+
+        self.root.geometry(f"{self.root.winfo_width()}x{self.root.winfo_height()}+{self.root.winfo_x()}+{y_position}")
+        self.is_top_position = not self.is_top_position
 
     def run(self):
         self.root.mainloop()
