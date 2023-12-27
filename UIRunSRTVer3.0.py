@@ -10,11 +10,11 @@ class SubtitlePlayer:
 
         # Configure window dimensions and center it on the screen
         window_width = 1200
-        window_height = 250
+        window_height = 180
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         x_position = (screen_width - window_width) // 2
-        y_position = screen_height - window_height - 50 # Top of the screen
+        y_position = screen_height - window_height - 40 # Top of the screen
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # Configure window appearance
@@ -28,43 +28,39 @@ class SubtitlePlayer:
 
         # Add a label to display the current time
         self.current_time_label = tk.Label(root, text="00:00:00", font=("Helvetica", 12), fg="white", bg="#040406")
-        self.current_time_label.pack(side=tk.LEFT, pady=10)
+        self.current_time_label.pack(side=tk.LEFT, pady=4)
 
         # Subtitle display area
-        self.subtitle_label = tk.Label(root, text="", font=("Helvetica", 20), justify="center",
-                                       fg="white", bg="black", relief="flat", padx=10, pady=10)
-        self.subtitle_label.pack(expand=True)
+        self.subtitle_label = tk.Label(root, text="", font=("Helvetica", 15), justify="center",
+                                       fg="white", bg="black", relief="flat", padx=10, pady=2)
+        self.subtitle_label.pack(side=tk.LEFT, expand=True)
 
         self.play_button = tk.Button(root, text="Play", command=self.play_subtitle , fg="white", bg="#040406")
-        self.play_button.pack(side=tk.RIGHT, padx=10, pady=10)
+        self.play_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         self.pause_button = tk.Button(root, text="Pause", command=self.pause_subtitle , fg="white", bg="#040406")
         self.pause_button["state"] = "disabled"
-        self.pause_button.pack(side=tk.RIGHT, padx=10, pady=10)
+        self.pause_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         self.resume_button = tk.Button(root, text="Resume", command=self.resume_subtitle , fg="white", bg="#040406")
         self.resume_button["state"] = "disabled"
-        self.resume_button.pack(side=tk.RIGHT, padx=10, pady=10)
+        self.resume_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         self.stop_button = tk.Button(root, text="Stop", command=self.stop_subtitle, fg="white", bg="#040406" )
         self.stop_button["state"] = "disabled"
-        self.stop_button.pack(side=tk.RIGHT, padx=10, pady=10)
+        self.stop_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         self.next_button = tk.Button(root, text="Next", command=self.next_subtitle, fg="white", bg="#040406" )
         self.next_button["state"] = "disabled"
-        self.next_button.pack(side=tk.RIGHT, padx=10, pady=10)
+        self.next_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         self.previous_button = tk.Button(root, text="Previous", command=self.previous_subtitle , fg="white", bg="#040406")
         self.previous_button["state"] = "disabled"
-        self.previous_button.pack(side=tk.RIGHT, padx=10, pady=10)
-
-
-
+        self.previous_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         # Load subtitle button
         self.load_button = tk.Button(root, text="Load Subtitle", command=self.load_subtitle, fg="white", bg="#040406")
-        self.load_button.pack(side=tk.RIGHT, padx=10, pady=10)
-
+        self.load_button.pack(side=tk.RIGHT, padx=10, pady=4)
 
         # Initialize subtitle-related variables
         self.subtitle_file = None
@@ -171,6 +167,8 @@ class SubtitlePlayer:
         self.stop_button["state"] = "disabled"
         self.previous_button["state"] = "disabled"
         self.next_button["state"] = "disabled"
+        self.subtitle_label["text"] = ""
+        self.subtitle_label["bg"] = "black"
         self.pause_time = None
         if self.after_id:
             self.root.after_cancel(self.after_id)
